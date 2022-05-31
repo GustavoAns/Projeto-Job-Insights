@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-
+# Vamo q Vamo
 @lru_cache
 def read(path):
     """Reads a file from a given path and returns its contents
