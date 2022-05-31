@@ -42,7 +42,7 @@ def get_max_salary(path):
             job["max_salary"].isnumeric() and
             int(job["max_salary"]) > int(max_salary)
         ):
-            max_salary = job["max_salary"]
+            max_salary = int(job["max_salary"])
 
     return max_salary
 
@@ -54,10 +54,10 @@ def get_min_salary(path):
 
     for job in all_jobs:
         if (
-            job["max_salary"].isnumeric() and
-            int(job["max_salary"]) < int(min_salary)
+            job["min_salary"].isnumeric() and
+            int(job["min_salary"]) < int(min_salary)
         ):
-            min_salary = int(job["max_salary"])
+            min_salary = int(job["min_salary"])
 
     return min_salary
 
@@ -68,7 +68,7 @@ def salary_range_valid(job, salary):
         type(salary) != int
     ):
         return True
-    if job["min_salary"] > job["max_salary"]:
+    if int(job["min_salary"]) > int(job["max_salary"]):
         return True
 
 
@@ -84,18 +84,13 @@ def matches_salary_range(job, salary):
 
 
 def filter_by_salary_range(jobs, salary):
-    """Filters a list of jobs by salary range
+    acumulador = []
 
-    Parameters
-    ----------
-    jobs : list
-        The jobs to be filtered
-    salary : int
-        The salary to be used as filter
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary):
+                acumulador.append(job)
+        except KeyError:
+            raise ValueError
 
-    Returns
-    -------
-    list
-        Jobs whose salary range contains `salary`
-    """
-    return []
+    return acumulador
