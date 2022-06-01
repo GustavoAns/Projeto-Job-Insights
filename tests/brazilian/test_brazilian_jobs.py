@@ -2,7 +2,7 @@ from src.brazilian_jobs import read_brazilian_file
 
 
 def test_brazilian_jobs():
-    path = "src/jobs.csv"
+    path = "tests/mocks/brazilians_jobs.csv"
     jobs = read_brazilian_file(path)
 
     for job in jobs:
