@@ -62,14 +62,15 @@ def get_min_salary(path):
     return min_salary
 
 
-def salary_range_valid(job, salary):
+def salary_range_valid(salary_max, salary_min, salary):
     if (
-        type(job["max_salary"]) != int or type(job["min_salary"]) != int or
+        type(salary_max) != int or type(salary_min) != int or
         type(salary) != int
     ):
         return True
-    if int(job["min_salary"]) > int(job["max_salary"]):
+    if int(salary_min) > int(salary_max):
         return True
+    return False
 
 
 def matches_salary_range(job, salary):
@@ -78,7 +79,7 @@ def matches_salary_range(job, salary):
         salary_min = job["min_salary"]
     except KeyError:
         raise ValueError
-    if salary_range_valid(job, salary):
+    if salary_range_valid(salary_max, salary_min, salary):
         raise ValueError
     return (salary_min <= salary <= salary_max)
 
@@ -90,7 +91,7 @@ def filter_by_salary_range(jobs, salary):
         try:
             if matches_salary_range(job, salary):
                 acumulador.append(job)
-        except KeyError:
-            raise ValueError
+        except ValueError:
+            pass
 
     return acumulador
